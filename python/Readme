@@ -1,0 +1,42 @@
+
+conda env create -f environment.yml
+conda activate neural-oit-env
+
+
+
+PyTorch/
+├── DFAOIT_1080x1920.onnx         # ONNX
+├── DFAOITModel.onnx         # ONNX
+├── DFAOITModel.pth          # PyTorch
+├── environment.yml          # Conda env
+├── models.py                # Model structure definition
+├── training.py              # Training, fine-tuning and consistency verification core
+├── utils.py                 # Tool functions such as weight conversion, import and export 
+├── export.py     # Compare the two outputs(.pth and .onnx) to determine whether they are consistent
+├── Reshape.py 
+└── Main_cli_tool.py         # Command line tool main entry
+
+
+Main_cli_tool.py Command:
+
+ """
+    DFAOIT model toolset: training, fine-tuning, exporting ONNX,Reshape
+    
+    Command:
+    1.python Main_cli_tool.py train --samples 20000 --output ModelName.pth
+    
+    2.python Main_cli_tool.py finetune --init Model_Name.pth --samples 10000 --output finetuned_ModelName.pth
+
+    3.python Main_cli_tool.py export --pth Model_Name.pth --output Model_Name.onnx  
+
+    4.python Main_cli_tool.py reshape --input model.onnx --height 1080 --width 1920 --output model_1080x1920.onnx
+
+
+"""
+Step:
+   1.training  : output.pth
+
+   2.export  :output.pth --> output.onnx   input:[N,H,W,10] output:[N,H,W,3]
+   
+   3.reshape :input:[N,H,W,10] output:[N,H,W,3] --->input:[N,1080,1920,10] output:[N,1080,1920,3]
+    
